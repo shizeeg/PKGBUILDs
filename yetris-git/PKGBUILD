@@ -1,0 +1,40 @@
+# Maintainer: Lucas de Sena <lucas DOT ta23 @ gmail DOT com>
+# Developer: Alexandre Dantas <alex DOT dantas92 @ gmail DOT com>
+# Contributor: Shizeeg Unadequatov <shizeeque @ gmail DOT com>
+
+pkgname=yetris-git
+pkgver=20140320
+pkgrel=5
+pkgdesc="Customizable Tetris(tm) for the terminal"
+arch=('x86_64' 'i686')
+url="http://www.github.com/alexdantas/yetris/"
+license=('GPL3')
+depends=('ncurses')
+makedepends=('git')
+conflicts=('yetris')
+
+source=("$pkgname::git+https://github.com/alexdantas/yetris.git")
+sha256sums=('SKIP')
+
+pkgver() {
+  cd "${srcdir}/${pkgname}"
+#  git describe --long --tags | sed -r 's/^v//;s/([^-]*-g)/r\1/;s/-/./g'
+  git log -1 --date=short | grep 'Date:' | sed 's|[^0-9]||g'
+}
+
+build() {
+  cd "${srcdir}/${pkgname}"
+  make
+}
+
+package() {
+  cd "${srcdir}/${pkgname}"
+
+  # By default it installs on /usr/games
+  sed -i 's/PREFIX)\/games/PREFIX)\/bin/g' Makefile
+  make DESTDIR="${pkgdir}/" PREFIX="${pkgdir}/usr" install
+
+  rm -rf "${pkgdir}/var"
+  chmod 0755 "${pkgdir}/usr/bin/yetris"
+  chown root:root "${pkgdir}/usr/bin/yetris"
+}
