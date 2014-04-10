@@ -1,4 +1,4 @@
 PKGBUILDs
 =========
 
-Arch Linux AUR PKGBUILD files.
+Arch Linux PKGBUILD files for AUR.

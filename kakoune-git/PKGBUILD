@@ -1,0 +1,38 @@
+# Maintainer: Guillaume ALAUX <Guillaume at ALAUX dot net>
+# Contributor: Shizeeg Unadequatov <shizeeque@gmail.com>
+
+pkgname=kakoune-git
+pkgver=r1915.33de426
+pkgrel=1
+pkgdesc='Code editor heavily inspired by Vim'
+arch=('i686' 'x86_64')
+url='https://github.com/mawww/kakoune'
+license=('custom:unlicense')
+depends=('ncurses' 'boost')
+makedepends=('git')
+
+source=("$pkgname::git+https://github.com/mawww/kakoune.git"
+        '01_ncurses.patch')
+
+sha256sums=('SKIP'
+            'bb4d7168f04e4cecc72659ee22950f9b3d4a799598bc2f841267161ed0987fd4')
+pkgver() {
+  cd "${srcdir}/${pkgname}"
+  printf "r%s.%s" "$(git rev-list --count HEAD)" "$(git rev-parse --short HEAD)"
+}
+
+prepare() {
+  cd "${srcdir}/${pkgname}"
+  patch -p1 < "${srcdir}"/01_ncurses.patch
+}
+
+build() {
+  cd "${srcdir}/${pkgname}/src"
+  make
+}
+
+package() {
+  cd "${srcdir}/${pkgname}/src"
+  make install DESTDIR="${pkgdir}" PREFIX=/usr
+  install -D ../UNLICENSE "${pkgdir}"/usr/share/licenses/${pkgname}/LICENSE
+}

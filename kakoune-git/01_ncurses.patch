@@ -1,0 +1,14 @@
+--- a/src/ncurses.cc	2014-04-10 13:06:46.286622047 +0400
++++ b/src/ncurses.cc	2014-04-10 13:07:41.085978646 +0400
+@@ -10,11 +10,7 @@
+ #define NCURSES_OPAQUE 0
+ #define NCURSES_INTERNALS
+ 
+-#ifdef __APPLE__
+ #include <ncurses.h>
+-#else
+-#include <ncursesw/ncurses.h>
+-#endif
+ 
+ #include <signal.h>
+ #include <termios.h>
