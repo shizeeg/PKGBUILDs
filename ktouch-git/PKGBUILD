@@ -1,0 +1,41 @@
+# Contributor: Casper Clemence <maninalift "at" gmail {dot} com>
+# Manteiner: Casper Clemence <maninalift "at" gmail {dot} com>
+# Contributor: Shizeeg Unadequatov <shizeeque at gmail.com>
+pkgname=ktouch-git
+pkgver=20140501
+pkgrel=1
+pkgdesc="The upcoming QML-Based, version of the touch-type tutoring software"
+arch=('i686' 'x86_64')
+url="http://ktouch.sourceforge.net/"
+license=('LGPL')
+depends=('kdebase-runtime' 'kqtquickcharts')
+makedepends=('git' 'cmake' 'automoc4')
+optdepends=(
+  'libxkbfile: X Keyboard Extension'
+)
+
+provides=('kdeedu-ktouch')
+conflicts=('kdeedu-ktouch')
+replaces=('ktouch-next-git' 'ktouch-next')
+install=ktouch-git.install
+
+source=("$pkgname::git://anongit.kde.org/ktouch")
+
+sha256sums=('SKIP')
+
+pkgver() {
+  cd "${srcdir}/${pkgname}"
+  git log -1 --date=short | grep 'Date:' | sed 's|[^0-9]||g'
+}
+
+build() {
+  cd "${srcdir}/${pkgname}"
+  cmake -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_BUILD_TYPE=Release || return 1
+} 
+
+package() {
+  cd "${srcdir}/${pkgname}"
+  make DESTDIR="$pkgdir/" install || return 1
+  rm -rf "$srcdir/$_gitname-build"
+}
+
