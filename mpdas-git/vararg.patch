@@ -1,0 +1,12 @@
+diff --git a/mpdas.h b/mpdas.h
+index 81bb00e..5605896 100644
+--- a/mpdas.h
++++ b/mpdas.h
+@@ -10,6 +10,7 @@
+ #include <pwd.h>
+ #include <errno.h>
+ #include <signal.h>
++#include <stdarg.h>
+ 
+ #include <fstream>
+ #include <iostream>
