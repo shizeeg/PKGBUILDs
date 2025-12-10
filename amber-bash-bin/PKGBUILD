@@ -8,15 +8,12 @@ arch=('x86_64' 'aarch64')
 license=('GPL3')
 provides=('amber-bash')
 conflicts=('amber-bash')
-
-source_x86_64=("https://github.com/amber-lang/amber/releases/download/${pkgver%.*}-alpha/amber-linux-gnu-${arch}.tar.xz")
-source_aarch64=("https://github.com/amber-lang/amber/releases/download/${pkgver%.*}-alpha)/amber-linux-gnu-${arch}.tar.xz")
-
 depends=(
 	bash
 	bc
 )
-
+source_x86_64=("https://github.com/amber-lang/amber/releases/download/${pkgver%.*}-alpha/amber-linux-gnu-${arch}.tar.xz")
+source_aarch64=("https://github.com/amber-lang/amber/releases/download/${pkgver%.*}-alpha)/amber-linux-gnu-${arch}.tar.xz")
 sha256sums_x86_64=('4deaaa2d63aa4addcf8514efa11446f76ac998b7ccbb290eb821966c82992729')
 sha256sums_aarch64=('c1ecad1e98404fd0e1d8817e11feeabb8cc3061d1229d5b963ba204fad3ed671')
 
